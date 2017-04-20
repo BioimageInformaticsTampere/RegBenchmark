@@ -19,27 +19,27 @@ slicethickness - A scalar specifying the section-to-section spacing in physical 
 resamplingfactor - A scalar specifying the amount of resampling to apply to the images before doing the calculations. 1 -> no resampling, < 1 -> downsampling, > 1 -> upsampling.  
 
 OUTPUT:  
-result - A struct containing the input settings, the detected fiducial point locations and the values of accuracy metrics described below.
+result - A struct containing the input settings, the detected fiducial point locations and the values of accuracy metrics described below.  
 
-TRE_pairwise: Euclidean distance between each fiducial point on each pair of adjacent sections. An N-1 x M matrix of pairwise errors for N-1 pairs of images and M fiducial points per pair.
+result.TRE_pairwise: Euclidean distance between each fiducial point on each pair of adjacent sections. An N-1 x M matrix of pairwise errors for N-1 pairs of images and M fiducial points per pair.  
 
-TRE_accumulated: Accumulated error of the fiducial points. If the fiducials extend through the entire series, this represents the residual Euclidean error between the location of the fiducials and a linear least-squares fit through the stack, given as an N x M matrix of errors for N sections and M fiducial point series. If the fiducials are pairwise, this represents the cumulative magnitude of the mean pairwise TRE vector, given as an N-1 x 1 vector of errors for N-1 image pairs.
+result.TRE_accumulated: Accumulated error of the fiducial points. If the fiducials extend through the entire series, this represents the residual Euclidean error between the location of the fiducials and a linear least-squares fit through the stack, given as an N x M matrix of errors for N sections and M fiducial point series. If the fiducials are pairwise, this represents the cumulative magnitude of the mean pairwise TRE vector, given as an N-1 x 1 vector of errors for N-1 image pairs.  
 
-RMSE: Pixelwise RMS error between each pair of sections computed within the area defined by the binary mask. An N-1 x 1 vector of RMSE values for N-1 pairs of sections.
+result.RMSE: Pixelwise RMS error between each pair of sections computed within the area defined by the binary mask. An N-1 x 1 vector of RMSE values for N-1 pairs of sections.  
 
-NCC: Pixelwise normalized cross correlation between each pair of sections computed within the area defined by the binary mask. An N-1 x 1 vector of NCC values for N-1 pairs of sections.
+result.NCC: Pixelwise normalized cross correlation between each pair of sections computed within the area defined by the binary mask. An N-1 x 1 vector of NCC values for N-1 pairs of sections.  
 
-MI: Pixelwise mutual information between each pair of sections computed within the area defined by the binary mask. An N-1 x 1 vector of MI values for N-1 pairs of sections.
+result.MI: Pixelwise mutual information between each pair of sections computed within the area defined by the binary mask. An N-1 x 1 vector of MI values for N-1 pairs of sections.  
 
-NMI: Pixelwise normalized mutual information between each pair of sections computed within the area defined by the binary mask. An N-1 x 1 vector of NMI values for N-1 pairs of sections.
+result.NMI: Pixelwise normalized mutual information between each pair of sections computed within the area defined by the binary mask. An N-1 x 1 vector of NMI values for N-1 pairs of sections.  
 
-Jaccard: Jaccard index between each pair of sections computed based on the area defined by the binary mask. An N-1 x 1 vector of Jaccard indices for N-1 pairs of sections.
+result.Jaccard: Jaccard index between each pair of sections computed based on the area defined by the binary mask. An N-1 x 1 vector of Jaccard indices for N-1 pairs of sections.  
 
-Zcontrast: GLCM-based scalar contrast value for the entire registered stack along the Z-direction.
+result.Zcontrast: GLCM-based scalar contrast value for the entire registered stack along the Z-direction.  
 
-Zcorrelation: GLCM-based scalar correlation value for the entire registered stack along the Z-direction.
-shrinkpercentage: Relative change in tissue area between original and post-registration binary masks.
+result.Zcorrelation: GLCM-based scalar correlation value for the entire registered stack along the Z-direction.  
 
+result.shrinkpercentage: Relative change in tissue area between original and post-registration binary masks.  
 
 CONTACT:  
 Kimmo Kartasalo  
@@ -48,9 +48,8 @@ Tampere University of Technology, Tampere, Finland
 University of Tampere, Tampere, Finland  
 
 LICENSE:  
-RegBenchmark, Copyright (c) 2017 Kimmo Kartasalo, Tampere University of Technology
-MATLAB(r). (c) 1984 - 2014 The MathWorks, Inc.
-
+RegBenchmark, Copyright (c) 2017 Kimmo Kartasalo, Tampere University of Technology  
+MATLAB(r). (c) 1984 - 2014 The MathWorks, Inc.  
 By using RegBenchmark, you agree to the terms of the disclaimer below and
 the GNU General Public License (GPL).
 
