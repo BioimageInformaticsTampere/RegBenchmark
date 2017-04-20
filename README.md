@@ -1,19 +1,20 @@
 # RegBenchmark
 Benchmarking framework for 3D histology reconstruction algorithms
 
-MATLAB (R2016b) framework used for evaluating the accuracy of reconstruction algorithms for 3D histology based on serial histological sections.
+MATLAB (R2016b) framework used for evaluating the accuracy of reconstruction algorithms for 3D histology based on serial histological sections. See the article below for more information on the various quality metrics computed by the framework.
 
-If you use RegBenchmark in a publication, please cite the article:
+If you use RegBenchmark in a publication, please cite:
+
 A Comparison of Algorithms for 3D Tissue Reconstruction from Serial Histological Sections
 Kimmo Kartasalo, Leena Latonen, Jorma Vihinen, Tapio Visakorpi, Matti Nykter, Pekka Ruusuvuori
-See the article for more information on the various quality metrics computed by the framework.
 
 USAGE:
+
 result = regbenchmark_Main_parallel(inputpath_images,inputpath_masks,inputpath_fiducials,inputpath_originalmasks,pixelsize,slicethickness,resamplingfactor);
 
 INPUT:
-inputpath_images - The full path to the folder containing N registered images.
 
+inputpath_images - The full path to the folder containing N registered images.
 inputpath_masks - The full path to the folder containing N registered binary masks (tissue > 0, background = 0).
 
 inputpath_fiducials - The full path to the folder containing fiducial points (=landmarks) stored as N or 2N-2 registered images.
@@ -27,6 +28,7 @@ slicethickness - A scalar specifying the section-to-section spacing in physical 
 resamplingfactor - A scalar specifying the amount of resampling to apply to the images before doing the calculations. 1 -> no resampling, < 1 -> downsampling, > 1 -> upsampling.
 
 OUTPUT:
+
 result - A struct containing the input settings, the detected fiducial point locations and the values of accuracy metrics described below.
 
 TRE_pairwise: Euclidean distance between each fiducial point on each pair of adjacent sections. An N-1 x M matrix of pairwise errors for N-1 pairs of images and M fiducial points per pair.
@@ -48,11 +50,13 @@ Zcontrast: GLCM-based scalar contrast value for the entire registered stack alon
 Zcorrelation: GLCM-based scalar correlation value for the entire registered stack along the Z-direction.
 shrinkpercentage: Relative change in tissue area between original and post-registration binary masks.
 
+
 CONTACT:
 Kimmo Kartasalo
 kimmo.kartasalo@tut.fi or kimmo.kartasalo@gmail.com
 Tampere University of Technology, Tampere, Finland
 University of Tampere, Tampere, Finland
+
 
 LICENSE:
 RegBenchmark, Copyright (c) 2017 Kimmo Kartasalo, Tampere University of Technology
