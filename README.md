@@ -13,6 +13,9 @@ Kimmo Kartasalo, Leena Latonen, Jorma Vihinen, Tapio Visakorpi, Matti Nykter, Pe
 USAGE:  
 result = regbenchmark_Main_parallel(inputpath_images,inputpath_masks,inputpath_fiducials,inputpath_originalmasks,pixelsize,slicethickness,resamplingfactor);
 
+For example:
+result = regbenchmark_Main_paralle('/Data/tissueimages','/Data/tissuemasks','Data/tissuefiducials','Data/originaltissuemasks',0.46,5,1);
+
 INPUT:  
 inputpath_images - The full path to the folder containing N registered images.  
 inputpath_masks - The full path to the folder containing N registered binary masks (tissue > 0, background = 0).  
