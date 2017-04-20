@@ -1,5 +1,4 @@
-# RegBenchmark
-Benchmarking framework for 3D histology reconstruction algorithms
+# RegBenchmark - Benchmarking framework for 3D histology reconstruction algorithms
 
 MATLAB (R2016b) framework used for evaluating the accuracy of reconstruction algorithms for 3D histology based on serial histological sections. See the article below for more information on the various quality metrics computed by the framework.
 
@@ -8,9 +7,11 @@ If you use RegBenchmark in a publication, please cite:
 A Comparison of Algorithms for 3D Tissue Reconstruction from Serial Histological Sections
 Kimmo Kartasalo, Leena Latonen, Jorma Vihinen, Tapio Visakorpi, Matti Nykter, Pekka Ruusuvuori
 
+
 USAGE:
 
 result = regbenchmark_Main_parallel(inputpath_images,inputpath_masks,inputpath_fiducials,inputpath_originalmasks,pixelsize,slicethickness,resamplingfactor);
+
 
 INPUT:
 
@@ -26,6 +27,7 @@ pixelsize - A scalar specifying the size of a single pixel in physical units.
 slicethickness - A scalar specifying the section-to-section spacing in physical units.
 
 resamplingfactor - A scalar specifying the amount of resampling to apply to the images before doing the calculations. 1 -> no resampling, < 1 -> downsampling, > 1 -> upsampling.
+
 
 OUTPUT:
 
@@ -52,6 +54,7 @@ shrinkpercentage: Relative change in tissue area between original and post-regis
 
 
 CONTACT:
+
 Kimmo Kartasalo
 kimmo.kartasalo@tut.fi or kimmo.kartasalo@gmail.com
 Tampere University of Technology, Tampere, Finland
@@ -59,6 +62,7 @@ University of Tampere, Tampere, Finland
 
 
 LICENSE:
+
 RegBenchmark, Copyright (c) 2017 Kimmo Kartasalo, Tampere University of Technology
 MATLAB(r). (c) 1984 - 2014 The MathWorks, Inc.
 
