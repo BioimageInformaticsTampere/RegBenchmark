@@ -77,10 +77,7 @@ for j = 1:numfiducials
     % First find the centroid.
     P = [mean(pointstofitnonanX),mean(pointstofitnonanY),mean(pointstofitnonanZ)]';
     % Perform SVD for centered datapoints.
-    [~,~,V] = svd([pointstofitnonanX-P(1),pointstofitnonanY-P(2),pointstofitnonanZ-P(3)]);
-    % Get the direction vector of the line and normalize to unit vector.
-    N = 1/V(end,1)*V(:,1);
-    N = N/norm(N);
+    [~,~,V] = svd([pointstofitnonanX-P(1),pointstofitnonanY-P(2),pointstofitnonanZ-P(3)],0);
     
     % Get the coordinates of the fitted line on all sections.
     % Simultaneously compute the in-plane residual error (ATRE) between the
@@ -94,12 +91,17 @@ for j = 1:numfiducials
         % Otherwise project the point onto the line.
         else
             % The [X,Y,Z] coordinate of this point on the line.
-            thispoint = P + dot([pointstofitX(i),pointstofitY(i),pointstofitZ(i)]'-P,N)*N;
-            % The fitted Y-coordinate.
-            Y2 = thispoint(2);
+            % Parametric equation of the line leads to:
+            % X = P(1) + tV(1,1)
+            % Y = P(2) + tV(2,1)
+            % Z = P(3) + tV(3,1)
+            % Z coordinate of this section is known, so solve for t.
+            t = (pointstofitZ(i)-P(3))/V(3,1);
+            % Solve for the fitted Y-coordinate.
+            Y2 = P(2) + t*V(2,1);
             fittedpoints{i}(j,1) = Y2;
-            % The fitted X-coordinate.
-            X2 = thispoint(1);
+            % Solve for the fitted X-coordinate.
+            X2 = P(1) + t*V(1,1);
             fittedpoints{i}(j,2) = X2;
             % The actual Y-coordinate.
             Y1 = fiducialpoints{i}(j,1);
