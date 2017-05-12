@@ -72,12 +72,20 @@ for j = 1:numfiducials
     pointstofitnonanY = pointstofitY(~nanpoints);
     pointstofitnonanZ = pointstofitZ(~nanpoints);
     
-    % Fit line minimizing the squared sum of orthogonal distances, ignore
-    % NaN points while fitting.
-    % First find the centroid.
+    % Find the centroid of data points to make sure the line fit goes
+    % through the centroid (the LS solution indeed should). This way
+    % there's no need to fit constant terms, the X and Y coeffs are enough.
     P = [mean(pointstofitnonanX),mean(pointstofitnonanY),mean(pointstofitnonanZ)]';
-    % Perform SVD for centered datapoints.
-    [~,~,V] = svd([pointstofitnonanX-P(1),pointstofitnonanY-P(2),pointstofitnonanZ-P(3)],0);
+    
+    % Perform SVD for centered datapoints to minimize orthogonal MSE.
+    %[~,~,V] = svd([pointstofitnonanX-P(1),pointstofitnonanY-P(2),pointstofitnonanZ-P(3)]);
+    %V = V(:,1);
+    
+    % Perform ordinary linear LS for centered X and Y separately to minimize
+    % MSE on the XY-plane.
+    Xcoeff = (pointstofitnonanZ-P(3))\(pointstofitnonanX-P(1));
+    Ycoeff = (pointstofitnonanZ-P(3))\(pointstofitnonanY-P(2));
+    V = [Xcoeff(1); Ycoeff(1); 1];
     
     % Get the coordinates of the fitted line on all sections.
     % Simultaneously compute the in-plane residual error (ATRE) between the
@@ -88,20 +96,19 @@ for j = 1:numfiducials
             fittedpoints{i}(j,1) = NaN;
             fittedpoints{i}(j,2) = NaN;
             TRE(i,j) = NaN;
-        % Otherwise project the point onto the line.
+        % Otherwise get the [X,Y] coordinate of the line on this section.
         else
-            % The [X,Y,Z] coordinate of this point on the line.
-            % Parametric equation of the line leads to:
-            % X = P(1) + tV(1,1)
-            % Y = P(2) + tV(2,1)
-            % Z = P(3) + tV(3,1)
-            % Z coordinate of this section is known, so solve for t.
-            t = (pointstofitZ(i)-P(3))/V(3,1);
+            % Solve parameter t using the known Z coordinate of this
+            % section based on the parameteric equation of the line:
+            % X = P(1) + t*V(1)
+            % Y = P(2) + t*V(2)
+            % Z = P(3) + t*V(3)
+            t = (pointstofitZ(i) - P(3))/V(3);
             % Solve for the fitted Y-coordinate.
-            Y2 = P(2) + t*V(2,1);
+            Y2 = P(2) + t*V(2);
             fittedpoints{i}(j,1) = Y2;
             % Solve for the fitted X-coordinate.
-            X2 = P(1) + t*V(1,1);
+            X2 = P(1) + t*V(1);
             fittedpoints{i}(j,2) = X2;
             % The actual Y-coordinate.
             Y1 = fiducialpoints{i}(j,1);
